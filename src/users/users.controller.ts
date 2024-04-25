@@ -11,7 +11,9 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from './user.entity';
+import { ApiBody, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('usuários')
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -35,6 +37,7 @@ export class UsersController {
   }
 
   @Post()
+  @ApiBody({ type: User })
   async create(@Body() user: User): Promise<User> {
     const newUser = await this.usersService.create(user);
     if (!newUser) {

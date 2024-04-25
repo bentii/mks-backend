@@ -15,8 +15,19 @@ services:
       - JWT_SECRET=b8cfcc9590927546c9dbf97ccc5b32b0f038ce37d39e82c058bacb7615f85e25
     depends_on:
       - db  
+      - redis
     volumes:
       - ./src:/app/src
+  redis:
+    container_name: cache
+    image: redis:6
+    ports:
+      - 6379:6379
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    volumes:
+      - redis:/data
   db:
     container_name: db
     image: postgres:12
@@ -30,4 +41,6 @@ services:
       - pgdata:/var/lib/postgresql/data
 
 volumes:
-  pgdata: {}
+  pgdata:
+  redis:
+    driver: local
