@@ -14,8 +14,8 @@ export class MoviesService {
     return this.moviesRepository.find();
   }
 
-  async findOne(id: number): Promise<Movie> {
-    return this.moviesRepository.findOne({ where: { id } });
+  async findOne(title: string): Promise<Movie> {
+    return this.moviesRepository.findOne({ where: { title } });
   }
 
   async create(movie: Movie): Promise<Movie> {
@@ -23,12 +23,12 @@ export class MoviesService {
     return this.moviesRepository.save(newMovie);
   }
 
-  async update(id: number, movie: Movie): Promise<Movie> {
-    await this.moviesRepository.update(id, movie);
-    return await this.moviesRepository.findOne({ where: { id } });
+  async update(title: string, movie: Movie): Promise<Movie> {
+    await this.moviesRepository.update(title, movie);
+    return await this.moviesRepository.findOne({ where: { title } });
   }
 
-  async delete(id: number): Promise<void> {
-    await this.moviesRepository.delete(id);
+  async delete(title: string): Promise<void> {
+    await this.moviesRepository.delete(title);
   }
 }
