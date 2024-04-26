@@ -1,2 +1,15 @@
 FROM postgres:12
 
+# Define as variáveis de ambiente para a configuração do PostgreSQL
+ENV POSTGRES_USER=postgres
+ENV POSTGRES_PASSWORD=postgres
+ENV POSTGRES_DB=postgres
+
+# Define o volume para persistência de dados
+VOLUME /var/lib/postgresql/data
+
+# Expõe a porta do PostgreSQL
+EXPOSE 5432
+
+# Define o comando padrão para executar ao iniciar o contêiner
+CMD ["postgres"]

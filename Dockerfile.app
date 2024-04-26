@@ -1,22 +1,30 @@
-# Use a imagem base do Node.js
-FROM node:18
+# Base image
+FROM node:14
 
-# Defina o diretório de trabalho dentro do contêiner
-WORKDIR /app    
+# Create app directory
+WORKDIR /app
 
-# Copie o arquivo package.json e package-lock.json para o diretório de trabalho
+# Install app dependencies
 COPY package*.json ./
-
-# Instale as dependências do aplicativo
 RUN npm install
 
-# Copie o restante dos arquivos do aplicativo para o diretório de trabalho
+# Bundle app source
 COPY . .
 
+# Compile TypeScript to JavaScript
 RUN npm run build
 
-# Exponha a porta em que o aplicativo está sendo executado
+# Define environment variables
+ENV DB_TYPE=postgres
+ENV DB_HOST=db
+ENV DB_PORT=5432
+ENV DB_USER=postgres
+ENV DB_PASS=postgres
+ENV DB_NAME=postgres
+ENV JWT_SECRET=b8cfcc9590927546c9dbf97ccc5b32b0f038ce37d39e82c058bacb7615f85e25
+
+# Expose port
 EXPOSE 3000
 
-# Comando para iniciar o aplicativo
-CMD [ "npm", "start" ]
+# Start app
+CMD [ "node", "dist/main" ]

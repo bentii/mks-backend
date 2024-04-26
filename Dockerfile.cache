@@ -1,3 +1,16 @@
 FROM redis:6
 
+# Define a variável de ambiente para o host do Redis
+ENV REDIS_HOST=redis
 
+# Define a variável de ambiente para a porta do Redis
+ENV REDIS_PORT=6379
+
+# Define o volume para persistência de dados
+VOLUME /data
+
+# Expõe a porta do Redis
+EXPOSE 6379
+
+# Define o comando padrão para executar ao iniciar o contêiner
+CMD [ "redis-server", "--appendonly", "yes" ]
