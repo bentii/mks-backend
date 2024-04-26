@@ -32,7 +32,6 @@ const redisUrl = parse(process.env.REDISCLOUD_URL);
       password: databaseUrl.password,
       database: databaseUrl.database,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true,
       retryAttempts: 2,
       retryDelay: 5000,
       ssl: { rejectUnauthorized: false }, // Enable SSL
