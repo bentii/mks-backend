@@ -14,8 +14,4 @@ export class Movie {
   @Column({type: 'int'})
   @ApiProperty()
   year: number;
-
-  @Column({type: 'text', nullable: true, default: null, array: true})
-  @ApiProperty()
-  genres: string[];
 }
