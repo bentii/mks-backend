@@ -12,6 +12,7 @@ import { parse } from 'pg-connection-string';
 
 // Parse the DATABASE_URL into an object
 const databaseUrl = parse(process.env.DATABASE_URL);
+const redisUrl = parse(process.env.REDISCLOUD_URL);
 
 @Module({
   imports: [
@@ -19,7 +20,9 @@ const databaseUrl = parse(process.env.DATABASE_URL);
     CacheModule.register({
       isGlobal: true,
       store: redisStore,
-      url: process.env.REDISCLOUD_URL, // Use REDISCLOUD_URL for Redis
+      host: redisUrl.host,
+      port: parseInt(redisUrl.port),
+      password: redisUrl.password,
     }),
     TypeOrmModule.forRoot({
       type: 'postgres', // Always use 'postgres' for Heroku Postgres
