@@ -8,7 +8,10 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import * as redisStore from 'cache-manager-redis-store';
+import { parse } from 'pg-connection-string';
 
+// Parse the DATABASE_URL into an object
+const databaseUrl = parse(process.env.DATABASE_URL);
 
 @Module({
   imports: [
@@ -16,20 +19,20 @@ import * as redisStore from 'cache-manager-redis-store';
     CacheModule.register({
       isGlobal: true,
       store: redisStore,
-      host: process.env.REDIS_HOST,
-      port: process.env.REDIS_PORT,
+      url: process.env.REDISCLOUD_URL, // Use REDISCLOUD_URL for Redis
     }),
     TypeOrmModule.forRoot({
-      type: process.env.DB_TYPE as any,
-      host: process.env.DB_HOST,
-      port: parseInt(process.env.DB_PORT),
-      username: process.env.DB_USER,
-      password: process.env.DB_PASS,
-      database: process.env.DB_NAME,
+      type: 'postgres', // Always use 'postgres' for Heroku Postgres
+      host: databaseUrl.host,
+      port: parseInt(databaseUrl.port),
+      username: databaseUrl.user,
+      password: databaseUrl.password,
+      database: databaseUrl.database,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
       retryAttempts: 20,
       retryDelay: 5000,
+      ssl: { rejectUnauthorized: false }, // Enable SSL
     }),
     MoviesModule,
     AuthModule,

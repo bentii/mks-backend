@@ -1,5 +1,0 @@
-build:
-  docker:
-    db: Dockerfile.db
-    cache: Dockerfile.cache
-    app: Dockerfile.app
