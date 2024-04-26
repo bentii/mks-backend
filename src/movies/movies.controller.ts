@@ -15,8 +15,7 @@ import { MoviesService } from './movies.service';
 import { Movie } from './movie.entity';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
-import { ApiTags, ApiBody} from '@nestjs/swagger';
-
+import { ApiTags, ApiBody } from '@nestjs/swagger';
 
 @ApiTags('filmes')
 @UseGuards(JwtAuthGuard)
@@ -53,12 +52,8 @@ export class MoviesController {
   @ApiBody({ type: Movie })
   async create(@Body() movie: Movie): Promise<Movie> {
     try {
-      
-      if (!movie.title || !movie.year || !movie.genres) {
-        throw new HttpException(
-          'Dados inválidos.',
-          HttpStatus.BAD_REQUEST,
-        );
+      if (!movie.title || !movie.year) {
+        throw new HttpException('Dados inválidos.', HttpStatus.BAD_REQUEST);
       }
 
       const newMovie = await this.moviesService.create(movie);
