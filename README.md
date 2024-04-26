@@ -3,7 +3,7 @@
 </p>
 
 Api containerizada em Nestjs
-Eu não possuia conhecimento prévio em Angular antes desse projeto, porém uso node.js a uma ano
+Eu não possuia conhecimento prévio em Angular antes desse projeto, porém uso node.js a um ano
 
 
 ## Description
